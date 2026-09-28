@@ -1,0 +1,35 @@
+@startuml
+hide circle
+skinparam linetype ortho
+entity "Клиент / clients" as client {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(150)
+  * phone : VARCHAR(16) <<UNIQUE>>
+  * address : VARCHAR(300)
+}
+entity "Мастер / technicians" as technician {
+  * id : INTEGER <<PK>>
+  --
+  * name : VARCHAR(150)
+  * phone : VARCHAR(16) <<UNIQUE>>
+  * specialization : VARCHAR(150)
+}
+entity "Заявка на ремонт / repair_requests" as request {
+  * id : INTEGER <<PK>>
+  --
+  * client_id : INTEGER <<FK>>
+  technician_id : INTEGER <<FK>>
+  * appliance_type : VARCHAR(100)
+  * brand : VARCHAR(100)
+  * model : VARCHAR(100)
+  * problem : VARCHAR(2000)
+  * created_at : TIMESTAMP
+  completed_at : TIMESTAMP
+  * status : VARCHAR(30)
+  * cost : NUMERIC(12,2)
+  * version : INTEGER
+}
+client ||--o{ request : "подаёт"
+technician |o--o{ request : "выполняет"
+@enduml
