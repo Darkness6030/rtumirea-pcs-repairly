@@ -19,7 +19,10 @@ public class StatisticsService {
     }
 
     public Statistics collect() {
-        List<RepairRequest> all = requests.findAll();
+        return collect(requests.findAll(), clients.findAll().size(), technicians.findAll().size());
+    }
+
+    public Statistics collect(List<RepairRequest> all, int clientCount, int technicianCount) {
         Map<RepairStatus, Long> counts = new EnumMap<>(RepairStatus.class);
         for (RepairStatus status : RepairStatus.values()) {
             counts.put(status, 0L);
@@ -37,8 +40,8 @@ public class StatisticsService {
                         ? new BigDecimal("0.00")
                         : revenue.divide(BigDecimal.valueOf(completed), 2, RoundingMode.HALF_UP);
         return new Statistics(
-                clients.findAll().size(),
-                technicians.findAll().size(),
+                clientCount,
+                technicianCount,
                 all.size(),
                 Collections.unmodifiableMap(counts),
                 revenue,

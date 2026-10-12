@@ -8,3 +8,4 @@ build/
 exports/
 *.log
 .DS_Store
+target/

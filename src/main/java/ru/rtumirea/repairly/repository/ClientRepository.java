@@ -30,6 +30,11 @@ public class ClientRepository extends JdbcRepository<Client> {
                 > 0;
     }
 
+    public Client findByPhone(String phone) {
+        var rows = query("SELECT * FROM clients WHERE phone = ?", phone);
+        return rows.isEmpty() ? null : rows.getFirst();
+    }
+
     protected Client mapRow(ResultSet row) throws SQLException {
         return new Client(
                 row.getInt("id"),

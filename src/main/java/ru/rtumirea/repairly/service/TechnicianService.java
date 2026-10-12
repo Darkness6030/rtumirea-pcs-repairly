@@ -36,11 +36,16 @@ public class TechnicianService {
     }
 
     private Technician validated(Integer id, String name, String phone, String specialization) {
-        return new Technician(
+        Technician value = new Technician(
                 id,
                 Validation.text(name, "Имя", 150),
                 Validation.phone(phone),
                 Validation.text(specialization, "Специализация", 150));
+        Technician existing = repository.findByPhone(value.phone());
+        if (existing != null && !java.util.Objects.equals(existing.id(), id)) {
+            throw new ru.rtumirea.repairly.exception.ValidationException("Мастер с таким телефоном уже существует.");
+        }
+        return value;
     }
 
     public void delete(int id) {

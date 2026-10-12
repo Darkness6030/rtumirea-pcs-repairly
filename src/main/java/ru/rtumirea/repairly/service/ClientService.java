@@ -36,11 +36,16 @@ public class ClientService {
     }
 
     private Client validated(Integer id, String name, String phone, String address) {
-        return new Client(
+        Client value = new Client(
                 id,
                 Validation.text(name, "Имя", 150),
                 Validation.phone(phone),
                 Validation.text(address, "Адрес", 300));
+        Client existing = repository.findByPhone(value.phone());
+        if (existing != null && !java.util.Objects.equals(existing.id(), id)) {
+            throw new ru.rtumirea.repairly.exception.ValidationException("Клиент с таким телефоном уже существует.");
+        }
+        return value;
     }
 
     public void delete(int id) {

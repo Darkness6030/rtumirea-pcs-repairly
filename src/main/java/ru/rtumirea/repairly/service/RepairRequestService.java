@@ -26,6 +26,58 @@ public class RepairRequestService {
         return repository.findAll();
     }
 
+    /** Validate the entire form before the single INSERT, avoiding partially saved requests. */
+    public RepairRequest create(RequestInput input) {
+        RequestInput v = validated(input);
+        if (v.status() != RepairStatus.NEW) {
+            throw new ValidationException("Новая заявка должна иметь статус «Новая».");
+        }
+        return repository.save(new RepairRequest(null, v.clientId(), v.technicianId(),
+                v.applianceType(), v.brand(), v.model(), v.problem(), LocalDateTime.now(),
+                null, v.status(), v.cost(), 0));
+    }
+
+    /** Use the version seen when opening the dialog, not a freshly read version. */
+    public void update(int id, int expectedVersion, RequestInput input) {
+        RepairRequest current = requireOpen(id);
+        if (current.version() != expectedVersion) {
+            throw new ValidationException("Заявка уже изменена. Закройте форму, обновите список и откройте её снова.");
+        }
+        RequestInput v = validated(input);
+        if (v.clientId() != current.clientId()) {
+            throw new ValidationException("Клиента зарегистрированной заявки менять нельзя.");
+        }
+        if (v.status() != current.status() && !current.status().canTransitionTo(v.status())) {
+            throw new ValidationException("Недопустимый переход из статуса «" + current.status().label() + "».");
+        }
+        LocalDateTime completed = v.status() == RepairStatus.COMPLETED ? LocalDateTime.now() : null;
+        if (completed != null && completed.isBefore(current.createdAt())) {
+            throw new ValidationException("Дата завершения не может быть раньше даты создания. Проверьте часы компьютера.");
+        }
+        saveChanges(new RepairRequest(id, current.clientId(), v.technicianId(), v.applianceType(),
+                v.brand(), v.model(), v.problem(), current.createdAt(), completed,
+                v.status(), v.cost(), expectedVersion));
+    }
+
+    private RequestInput validated(RequestInput input) {
+        if (input == null) {
+            throw new ValidationException("Заполните данные заявки.");
+        }
+        clients.findById(input.clientId());
+        if (input.technicianId() != null) technicians.findById(input.technicianId());
+        if (input.status() == null) throw new ValidationException("Выберите статус.");
+        if (input.status() != RepairStatus.NEW && input.status() != RepairStatus.CANCELLED
+                && input.technicianId() == null) {
+            throw new ValidationException("Для этого статуса необходимо назначить мастера.");
+        }
+        return new RequestInput(input.clientId(), input.technicianId(),
+                Validation.text(input.applianceType(), "Вид техники", 100),
+                Validation.text(input.brand(), "Бренд", 100),
+                Validation.text(input.model(), "Модель", 100),
+                Validation.multiline(input.problem(), "Неисправность", 2000),
+                Validation.cost(input.cost()), input.status());
+    }
+
     public RepairRequest findById(int id) {
         RepairRequest result = repository.findById(Validation.id(id));
         if (result == null) {

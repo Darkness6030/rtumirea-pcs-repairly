@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rtumirea.repairly.fx.controller.PersonDialogController"
+      fx:id="formRoot" styleClass="form" spacing="14" prefWidth="570" prefHeight="440">
+    <Label fx:id="title" styleClass="page-title"/>
+    <Label text="Все поля обязательны. Телефон: от 10 до 15 цифр." styleClass="muted" wrapText="true"/>
+    <VBox spacing="6"><Label text="Имя *"/><TextField fx:id="name" promptText="Фамилия и имя"/></VBox>
+    <VBox spacing="6"><Label text="Телефон *"/><TextField fx:id="phone" promptText="+7 (900) 123-45-67"/></VBox>
+    <VBox spacing="6"><Label fx:id="detailLabel"/><TextField fx:id="detail"/></VBox>
+    <Label fx:id="error" styleClass="error" wrapText="true" minHeight="40"/>
+    <Region VBox.vgrow="ALWAYS"/>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Отмена" cancelButton="true" onAction="#cancel"/>
+        <Button text="Сохранить" defaultButton="true" styleClass="primary" onAction="#save"/>
+    </HBox>
+</VBox>

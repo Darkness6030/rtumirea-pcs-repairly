@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rtumirea.repairly.fx.controller.MainController" styleClass="app-shell">
+    <fx:define><ToggleGroup fx:id="navigation"/></fx:define>
+    <left>
+        <VBox styleClass="sidebar" prefWidth="190" spacing="8">
+            <Label text="repairly" styleClass="brand"/>
+            <Label text="СЕРВИС РЕМОНТА" styleClass="brand-caption"/>
+            <Region prefHeight="32"/>
+            <Label text="РАБОЧЕЕ ПРОСТРАНСТВО" styleClass="nav-caption"/>
+            <ToggleButton fx:id="requestsNav" text="Заявки" onAction="#showRequests" toggleGroup="$navigation" selected="true" styleClass="nav-button" maxWidth="Infinity"/>
+            <ToggleButton fx:id="clientsNav" text="Клиенты" onAction="#showClients" toggleGroup="$navigation" styleClass="nav-button" maxWidth="Infinity"/>
+            <ToggleButton fx:id="techniciansNav" text="Мастера" onAction="#showTechnicians" toggleGroup="$navigation" styleClass="nav-button" maxWidth="Infinity"/>
+            <ToggleButton fx:id="statisticsNav" text="Статистика" onAction="#showStatistics" toggleGroup="$navigation" styleClass="nav-button" maxWidth="Infinity"/>
+            <Region VBox.vgrow="ALWAYS"/>
+            <Label text="Всё для хорошего сервиса." wrapText="true" styleClass="sidebar-note"/>
+            <Label text="REPAIRLY  /  02" styleClass="brand-caption"/>
+        </VBox>
+    </left>
+    <center>
+        <StackPane fx:id="pages" styleClass="workspace">
+            <fx:include fx:id="requestsPage" source="requests.fxml"/>
+            <fx:include fx:id="clientsPage" source="directory.fxml" visible="false" managed="false"/>
+            <fx:include fx:id="techniciansPage" source="directory.fxml" visible="false" managed="false"/>
+            <fx:include fx:id="statisticsPage" source="statistics.fxml" visible="false" managed="false"/>
+        </StackPane>
+    </center>
+    <bottom>
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="statusbar">
+            <ProgressIndicator fx:id="progress" prefWidth="18" prefHeight="18" maxWidth="18" maxHeight="18"/>
+            <Label fx:id="connectionStatus" text="Подключение к базе данных…" styleClass="muted"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="refresh" text="Обновить" onAction="#refreshData"/>
+        </HBox>
+    </bottom>
+</BorderPane>

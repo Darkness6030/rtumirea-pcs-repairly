@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rtumirea.repairly.fx.controller.StatisticsController" spacing="16">
+    <VBox spacing="4">
+        <Label text="Сервис в цифрах" styleClass="page-title"/>
+        <Label text="Все заявки в базе · обновляется вместе с данными · фильтры списка не применяются" styleClass="muted" wrapText="true"/>
+    </VBox>
+    <GridPane hgap="12" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="25"/><ColumnConstraints percentWidth="25"/>
+            <ColumnConstraints percentWidth="25"/><ColumnConstraints percentWidth="25"/>
+        </columnConstraints>
+        <VBox styleClass="metric" spacing="10"><Label text="Всего заявок" styleClass="muted"/><Label fx:id="total" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.columnIndex="1"><Label text="Открытые заявки" styleClass="muted"/><Label fx:id="active" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.columnIndex="2"><Label text="Завершено" styleClass="muted"/><Label fx:id="completed" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.columnIndex="3"><Label text="Доля завершённых" styleClass="muted"/><Label fx:id="completionRate" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.rowIndex="1"><Label text="Клиенты" styleClass="muted"/><Label fx:id="clients" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="1"><Label text="Мастера" styleClass="muted"/><Label fx:id="technicians" styleClass="metric-value"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="2"><Label text="Стоимость завершённых" styleClass="muted" wrapText="true"/><Label fx:id="completedCost" styleClass="metric-money"/></VBox>
+        <VBox styleClass="metric" spacing="10" GridPane.rowIndex="1" GridPane.columnIndex="3"><Label text="Средняя стоимость&#10;завершённого ремонта" styleClass="muted" minHeight="30"/><Label fx:id="averageCost" styleClass="metric-money"/></VBox>
+    </GridPane>
+    <VBox styleClass="chart-panel" spacing="8" VBox.vgrow="ALWAYS">
+        <Label text="Заявки по этапам ремонта" styleClass="section-title"/>
+        <BarChart fx:id="statusChart" animated="false" legendVisible="false" horizontalGridLinesVisible="false" categoryGap="6" barGap="2" minHeight="180" VBox.vgrow="ALWAYS">
+            <xAxis><NumberAxis fx:id="countAxis" label="Количество заявок" minorTickVisible="false" tickUnit="1" forceZeroInRange="true"/></xAxis>
+            <yAxis><CategoryAxis/></yAxis>
+        </BarChart>
+    </VBox>
+    <Label text="Стоимость — сумма выполненных работ, а не полученные платежи. Открытые заявки: все, кроме завершённых и отменённых." styleClass="hint" wrapText="true"/>
+</VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rtumirea.repairly.fx.controller.DirectoryController" spacing="16">
+    <HBox alignment="CENTER_LEFT" spacing="16">
+        <VBox spacing="4" HBox.hgrow="ALWAYS">
+            <Label fx:id="title" styleClass="page-title"/>
+            <Label fx:id="subtitle" styleClass="muted"/>
+        </VBox>
+        <Button text="+  Добавить" styleClass="primary" onAction="#add"/>
+    </HBox>
+    <TextField fx:id="search" promptText="Поиск по имени, телефону и дополнительным сведениям"/>
+    <HBox spacing="8" alignment="CENTER_LEFT">
+        <Label fx:id="count" styleClass="section-label"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="relatedButton" text="Показать заявки" onAction="#related"/>
+        <Button fx:id="editButton" text="Редактировать" onAction="#edit"/>
+        <Button fx:id="deleteButton" text="Удалить" styleClass="danger" onAction="#delete"/>
+    </HBox>
+    <TableView fx:id="table" VBox.vgrow="ALWAYS"/>
+    <Label text="Телефон уникален. Запись со связанными заявками удалить нельзя — история ремонта сохраняется." styleClass="hint" wrapText="true"/>
+</VBox>

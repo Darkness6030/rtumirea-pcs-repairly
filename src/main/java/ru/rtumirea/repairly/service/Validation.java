@@ -36,6 +36,14 @@ public final class Validation {
         return value;
     }
 
+    public static String multiline(String value, String label, int max) {
+        // Newlines are useful in a JavaFX TextArea; other control characters remain forbidden.
+        if (value == null) return text(null, label, max);
+        String normalized = value.replace("\r\n", "\n").replace('\r', '\n').strip();
+        text(normalized.replace('\n', ' '), label, max);
+        return normalized;
+    }
+
     public static String phone(String value) {
         String phone = text(value, "Телефон", 40).replaceAll("[()\\s-]", "");
         if (!phone.matches("\\+?[0-9]{10,15}")) {

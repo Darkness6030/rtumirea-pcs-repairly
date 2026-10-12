@@ -31,6 +31,11 @@ public class TechnicianRepository extends JdbcRepository<Technician> {
                 > 0;
     }
 
+    public Technician findByPhone(String phone) {
+        var rows = query("SELECT * FROM technicians WHERE phone = ?", phone);
+        return rows.isEmpty() ? null : rows.getFirst();
+    }
+
     protected Technician mapRow(ResultSet row) throws SQLException {
         return new Technician(
                 row.getInt("id"),

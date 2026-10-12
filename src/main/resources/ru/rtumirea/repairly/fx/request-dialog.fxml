@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rtumirea.repairly.fx.controller.RequestDialogController"
+      fx:id="formRoot" styleClass="form" spacing="14" prefWidth="680" prefHeight="680">
+    <Label fx:id="title" styleClass="page-title"/>
+    <Label fx:id="subtitle" styleClass="muted" wrapText="true"/>
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="form-scroll">
+        <VBox spacing="14">
+            <VBox spacing="6"><Label text="Клиент *"/><ComboBox fx:id="client" promptText="Выберите клиента" maxWidth="Infinity"/></VBox>
+            <VBox spacing="6"><Label text="Вид техники *"/><TextField fx:id="applianceType" promptText="Например, стиральная машина"/></VBox>
+            <HBox spacing="14">
+                <VBox spacing="6" HBox.hgrow="ALWAYS"><Label text="Бренд *"/><TextField fx:id="brand" promptText="Производитель"/></VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS"><Label text="Модель *"/><TextField fx:id="model" promptText="Обозначение модели"/></VBox>
+            </HBox>
+            <VBox spacing="6"><Label text="Неисправность *"/><TextArea fx:id="problem" wrapText="true" prefRowCount="3" promptText="Что случилось с техникой? До 2000 символов."/></VBox>
+            <VBox spacing="6"><Label text="Мастер"/><ComboBox fx:id="technician" maxWidth="Infinity"/></VBox>
+            <HBox spacing="14">
+                <VBox spacing="6" HBox.hgrow="ALWAYS"><Label text="Статус *"/><ComboBox fx:id="status" maxWidth="Infinity"/></VBox>
+                <VBox spacing="6" HBox.hgrow="ALWAYS"><Label text="Стоимость, ₽ *"/><TextField fx:id="cost" promptText="0,00"/></VBox>
+            </HBox>
+            <Label text="Доступны только допустимые переходы статуса. Для диагностики и ремонта назначьте мастера. Нулевая стоимость допустима." styleClass="hint" wrapText="true"/>
+        </VBox>
+    </ScrollPane>
+    <Label fx:id="error" styleClass="error" wrapText="true" minHeight="38"/>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Отмена" cancelButton="true" onAction="#cancel"/>
+        <Button text="Сохранить" defaultButton="true" styleClass="primary" onAction="#save"/>
+    </HBox>
+</VBox>

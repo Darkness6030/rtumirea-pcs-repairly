@@ -33,7 +33,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         return findById(id);
     }
 
-    /** Optimistic lock prevents two consoles from silently overwriting each other. */
+    /** Optimistic lock prevents two clients from silently overwriting each other. */
     public boolean update(RepairRequest r) {
         return execute(
                         """
