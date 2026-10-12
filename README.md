@@ -65,18 +65,46 @@ Windows PowerShell (настройку `.env` можно выполнить ко
 Выберите `0`, чтобы вернуться из раздела или завершить программу. Закрытие
 стандартного ввода также корректно завершает приложение.
 
-### Java из PyCharm на macOS
+### Запуск на локальной Java (macOS)
 
-На машине, где нет отдельного JDK, можно использовать Java из установленного PyCharm,
-если в поставке присутствует `javac`:
+Приложение запускается обычным процессом Java на компьютере. Docker нужен для PostgreSQL.
+На этой машине доступен JDK 21 из PyCharm; отдельный системный JDK не зарегистрирован.
+Полная последовательность запуска из нового терминала:
 
 ```bash
+cd ~/PycharmProjects/rtumirea-pcs-repairly
 export JAVA_HOME="/Applications/PyCharm.app/Contents/jbr/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+java -version
+javac -version
+
+# Создать настройки только при их отсутствии.
+[ -f .env ] || cp .env.example .env
+
+docker compose up -d --wait
 ./gradlew -q --console=plain run
 ```
 
-Полноценная поддержка редактирования Java удобнее в IntelliJ IDEA, но сборка и запуск
-из терминала работают независимо от редактора.
+Docker Desktop должен быть запущен. При первом запуске Gradle скачает зависимости.
+Для выхода выберите `0`. Переменные `JAVA_HOME` и `PATH` действуют в текущем терминале.
+
+Если установлен отдельный JDK 21, вместо пути к PyCharm можно выбрать его:
+
+```bash
+export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
+export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+После однократной сборки приложение можно запускать напрямую, без Gradle:
+
+```bash
+./gradlew installDist
+./build/install/rtumirea-pcs-repairly/bin/rtumirea-pcs-repairly
+```
+
+Эта команда также использует локальную Java из `JAVA_HOME`. Выполняйте её из корня
+проекта, чтобы приложение прочитало `.env`. После изменения кода повторите `installDist`.
 
 Остановить БД без удаления данных:
 
