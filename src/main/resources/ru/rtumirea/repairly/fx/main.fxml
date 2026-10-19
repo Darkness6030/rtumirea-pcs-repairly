@@ -14,7 +14,6 @@
             <ToggleButton fx:id="techniciansNav" text="Мастера" onAction="#showTechnicians" toggleGroup="$navigation" styleClass="nav-button" maxWidth="Infinity"/>
             <ToggleButton fx:id="statisticsNav" text="Статистика" onAction="#showStatistics" toggleGroup="$navigation" styleClass="nav-button" maxWidth="Infinity"/>
             <Region VBox.vgrow="ALWAYS"/>
-            <Label text="Всё для хорошего сервиса." wrapText="true" styleClass="sidebar-note"/>
             <Label text="REPAIRLY  /  02" styleClass="brand-caption"/>
         </VBox>
     </left>
