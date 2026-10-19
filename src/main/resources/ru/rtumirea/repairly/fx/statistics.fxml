@@ -28,5 +28,4 @@
             <yAxis><CategoryAxis/></yAxis>
         </BarChart>
     </VBox>
-    <Label text="Стоимость — сумма выполненных работ, а не полученные платежи. Открытые заявки: все, кроме завершённых и отменённых." styleClass="hint" wrapText="true"/>
 </VBox>

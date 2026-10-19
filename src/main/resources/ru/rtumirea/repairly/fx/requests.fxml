@@ -44,5 +44,4 @@
             <Label fx:id="detailDates" styleClass="muted" wrapText="true"/>
         </VBox>
     </SplitPane>
-    <Label text="Сортировка — по заголовку столбца. Shift + щелчок — по нескольким столбцам." styleClass="hint"/>
 </VBox>

@@ -18,5 +18,4 @@
         <Button fx:id="deleteButton" text="Удалить" styleClass="danger" onAction="#delete"/>
     </HBox>
     <TableView fx:id="table" VBox.vgrow="ALWAYS"/>
-    <Label text="Телефон уникален. Запись со связанными заявками удалить нельзя — история ремонта сохраняется." styleClass="hint" wrapText="true"/>
 </VBox>
