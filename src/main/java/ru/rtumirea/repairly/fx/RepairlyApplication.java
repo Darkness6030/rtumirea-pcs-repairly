@@ -18,7 +18,7 @@ public final class RepairlyApplication extends Application {
             var view = Ui.<MainController>load("main.fxml");
             Scene scene = new Scene(view.root(), 1280, 820);
             Ui.style(scene);
-            stage.setTitle("Repairly · Сервис ремонта");
+            stage.setTitle("Repairly - Сервис ремонта");
             stage.setMinWidth(1050);
             stage.setMinHeight(700);
             stage.setScene(scene);
