@@ -1,0 +1,28 @@
+name: Repairly checks
+on: [push, pull_request]
+jobs:
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: KR2 regression tests
+        run: ./mvnw -B -ntp test
+      - name: Backend tests and package
+        run: ./mvnw -B -ntp -f backend/pom.xml verify
+      - name: JavaScript syntax
+        run: node --check backend/src/main/resources/static/app.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+      - name: Web form checks
+        working-directory: backend
+        run: |
+          npm ci --ignore-scripts
+          npm test

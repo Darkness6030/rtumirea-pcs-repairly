@@ -9,3 +9,9 @@ exports/
 *.log
 .DS_Store
 target/
+node_modules/
+
+# Original teaching archive contains example credentials and build caches
+docs/reference/*.zip
+
+backups/
